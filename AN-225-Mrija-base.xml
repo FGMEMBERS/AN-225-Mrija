@@ -60,7 +60,10 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
     <gear>
       <brake-parking type="double">1</brake-parking>
     </gear>
-    
+    <ice>
+	<ice type="int">0</ice>
+	<weight type="float">66000</weight>
+    </ice>
     <switches>
       <fuel type="float">0</fuel>
       <gauge-light type="int">0</gauge-light>
@@ -68,6 +71,7 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
       <adf-2-selector type="double">0</adf-2-selector>
       <ushdb-sel-1 type="double">0</ushdb-sel-1>
       <ushdb-sel-2 type="double">0</ushdb-sel-2>
+      <metar type="bool">0</metar>
     </switches>
     <chokes>
       <activ type="int">0</activ>
@@ -82,6 +86,9 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
       </door>
       <payload type="int">2</payload>            
     </shuttle>
+    <cargodoor>
+      <signal type="int">0</signal>
+    </cargodoor>
     
   </controls>
     
@@ -96,7 +103,7 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
   
    <description>Antonov AN-225-Mrija heavy/outsize cargo aircraft (YASim fdm)</description>
    <author>HerbyW (Instrumentation, Animation, FDM), firefly graphic blender design for interior and panel, Lee Elliott (3D/FDM-original)</author>
-   <aircraft-version>3.4.2</aircraft-version>    
+   <aircraft-version>3.4.5</aircraft-version>    
    <status>advanced production</status>
    <aero>AN-225-Mrija-yasim</aero>
     <rating>
@@ -114,6 +121,7 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
     
     <model>
       <path>Aircraft/AN-225-Mrija/Models/AN-225-Mrija.xml</path>
+      <an225><version type="string">3.4.5</version></an225>
     </model>
     
     <sound>      
@@ -129,7 +137,8 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
       <chat_display>1</chat_display>
       <generic> 
         
-        
+        <int type="int" n="0" alias="/controls/ice/trigger/state">  0 </int>	  
+	<int type="int" n="1" alias="/controls/ice/ice">  0 </int>
         <int type="int" n="2" alias="/controls/shuttle/door/position"> 0 </int>
         <int type="int" n="3" alias="/controls/chokes/activ">  0 </int>
         <int type="int" n="4" alias="/sim/replay/replay-state">  0 </int>
@@ -141,14 +150,17 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
 	<int type="int" n="10" alias="/controls/lighting/taxi-lights"/>
 	<int type="int" n="11" alias="/controls/switches/fuel">  0 </int>
 	
+	<int type="int" n="16" alias="/gear/gear[0]/wow">  1 </int>
+	
+	
         <float n="0" alias="/surface-positions/slat-pos-norm"/>
         <float n="1" alias="/surface-positions/spoiler-pos-norm"/>
         <float n="2" alias="/gear/gear[8]/rollspeed-ms" />
-        <float n="3" alias="/orientation/pitch-deg"/>
+        <float n="3" alias="/sim/weight[3]/weight-lb"/>        
         <float n="4" alias="/gear/gear/steering-norm" />
         <float n="5" alias="/position/gear-agl-m"> 0 </float>                    <!-- altitude for MP shadow -->
         <float n="6" alias="/position/altitude-ft"> 0 </float>                          <!-- altitude for MP -->        
-        <float n="7" alias="/orientation/roll-deg"/>        
+	<float n="7"  alias="/sim/model/door-positions/cargo/position-norm"/>
         <float n="8" alias="/controls/engines/engine[0]/throttle" />
         <float n="9" alias="/gear/gear[5]/compression-norm" />
         <float n="10" alias="/gear/gear[6]/compression-norm" />
@@ -162,8 +174,11 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
         <float n="18" alias="/gear/gear[14]/compression-norm" />
         <float n="19" alias="/gear/gear[15]/compression-norm" />
         
+        
+        
              
         <string  alias="/sim/multiplay/callsign"/>
+        <string n="1" type="string" alias="/sim/model/an225/version"/>
         
      </generic>
     </multiplay>
@@ -183,16 +198,28 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
     <help>
       <title>Antonov AN-225-Mrija</title>
       <key>
-        <name>d/f</name>
-        <desc>retract/extend slats</desc>
+	<name>d/f</name>
+	<desc>retract/extend slats</desc>
       </key>
       <key>
-        <name>j/k</name>
-        <desc>decrease/increase spoilers</desc>
+	<name>j/k</name>
+	<desc>decrease/increase spoilers</desc>
       </key>      
       <key>
-        <name>Delete</name>
-        <desc>Reverser on/off</desc>
+	<name>Delete</name>
+	<desc>Reverser on/off</desc>
+      </key>
+      <key>
+	<name>e</name>
+	<desc>Open/Close Front Cargo Door</desc>
+      </key>
+      <key>
+	<name>&lt;</name>
+	<desc>Change Pilot Engineer View</desc>
+      </key>
+      <key>
+	<name>y</name>
+	<desc>Change Pilot Ramp View</desc>
       </key>
       <text>Welcome to the heavy cargo lifter aircraft Antonow 225 Mrija
 	
@@ -206,7 +233,7 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
 		- Red lamps showing running engines, green lamps showing idle rpm.
 		- Overhead panel: all switches in up position, power for navigation radios (ADF and VOR), compass and skawk.
 		- Engineer panel: check red lamps going to green, then engines are ready to go, move throttle to idle position.
-		- Check cargo and/or payload: press y to switch to the ramp control and open the red box, for loading cargo and paratroopers.
+		- Check cargo and/or payload: press y to switch to the ramp control and open the red box, for loading cargo.
 		
 		Additional Settings:
 		
@@ -222,8 +249,8 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
 		There is a 3 knob panel at the left side, marker volume, instrument lights and for rembrandt - cabin lights.
 		
 		The switch right from the Lights panel is for landing and taxi lights.
-		Then there is the switch for activating the parachuters and a switch for the cargo door.
-		Right from the Parachuters-switch is a switch for the new ALS lights, they are working only without Rembrandt and also not over the MP-modus.
+		Then there is the switch for activating the cargo door.
+		And a switch for the new ALS lights, they are working only without Rembrandt and also not over the MP-modus.
 		
 		On the very left side you have a panel with 5 green lamps, the lower 3 are for trim-neutralisation, used after the Autopilot is dissabled.
 		The upper two you may press to get the latest METAR infos on screen.
@@ -428,12 +455,6 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
 <ushdb><compass type="double">0</compass></ushdb>
 <mapcase><page type="int">1</page></mapcase>
 
-<doors>
-   <door1>
-     <position-norm type="float">0</position-norm>
-   </door1>
-</doors>
-
 <!-- B707 Stopwatch  -->
 <stopwatch>
   <running type="bool">0</running>
@@ -471,6 +492,9 @@ testing and helping with coding: 3m, D-leon, eagle, D-MK1 and many others
     <mapcase>
       <file>Aircraft/AN-225-Mrija/Nasal/mapcase.nas</file>
     </mapcase>
+    <doors>
+      <file>Aircraft/AN-225-Mrija/Nasal/doors.nas</file>
+    </doors>
   </nasal>   
 
 </PropertyList>

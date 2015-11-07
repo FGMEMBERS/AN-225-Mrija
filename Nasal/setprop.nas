@@ -56,6 +56,31 @@ setlistener("/controls/paratroopers/jump-signal", func(v) {
 ######################################################################################################################
 
 #
+#ICE2 4 wagons roll out and jump
+#
+setlistener("/controls/ice/jump-signal", func(v) {
+ if(v.getValue()){
+    interpolate("/controls/ice/jump-signal-pos", 1, 0.25);
+    
+  }else{
+    interpolate("/controls/ice/jump-signal-pos", 0, 0.25);
+  }
+});
+
+#
+#ICE2 4 wagons loading
+#
+setlistener("/controls/ice/load-signal", func(v) {
+  if(v.getValue()){
+    interpolate("/sim/weight[3]/weight-lb", 264000, 40);
+  }else{
+    interpolate("/sim/weight[3]/weight-lb", 0, 40);
+  }
+});
+
+######################################################################################################################
+
+#
 # Air and Groundspeed selector for USVP-Instrument
 #
 setlistener("/controls/switches/usvp-selector-trans", func 
@@ -229,6 +254,27 @@ setlistener("/controls/chokes/activ", func
 }});
 
 ########################################################################################################
+# Cargo Door Control
+#
+#controls/cargodoor/signal
+#  {
+
+
+setlistener("controls/cargodoor/signal", func
+
+{ 
+  if (getprop("/controls/chokes/activ") == 0)
+  {
+     setprop("sim/messages/copilot", "Cargo Door can only move if chokes and brake are set!");
+      
+  } 
+  else doors.cargo.toggle()
+});
+
+
+
+
+########################################################################################################
 
 # Landing Gears Control with help from: 707 Hangar of Constance
 
@@ -353,6 +399,7 @@ setprop("/controls/engines/engine[5]/reverser", 1);
 );
 
 #################################################################################################################
+# payload
 
 
 setlistener("/controls/shuttle/payload", func
@@ -369,6 +416,7 @@ setlistener("/controls/shuttle/payload", func
      
 });     
 
+ 
 
 #############################################################################################################
 # Lake of Constance Hangar :: M.Kraus
@@ -451,9 +499,9 @@ return value;
 
 var adjustAlt = func(amount,step=100){
 
-var value = getprop("/autopilot/setting/target-altitude-ft");
+var value = getprop("/autopilot/settings/target-altitude-ft");
 value = adjustStep(value,amount,100);
-setprop("/autopilot/setting/target-altitude-ft",value);
+setprop("/autopilot/settings/target-altitude-ft",value);
 
 
 };

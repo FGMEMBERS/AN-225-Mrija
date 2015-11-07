@@ -39,13 +39,15 @@
     </emission>
 </animation>
 
-<!--Controls not used now, later
+<!--Controls 1=CargoDoor 2=not-used 3=ALS Lights-->
 <animation>
   <type>rotate</type>
   <object-name>handle_1</object-name>
-  <property>sim/multiplay/generic/float[12]</property>  
+  <property>sim/multiplay/generic/float[7]</property>  
   <interpolation>
     <entry><ind>	0.0</ind>	<dep>	-60.0</dep></entry>
+    <entry><ind>	0.05</ind>	<dep>	0.0</dep></entry>
+    <entry><ind>	0.95</ind>	<dep>	0.0</dep></entry>    
     <entry><ind>	1.0</ind>	<dep>	60.0</dep></entry>
   </interpolation>
   <axis>
@@ -67,7 +69,7 @@
     <y>-1.0</y>
     <z>0.0</z>
   </axis>
-</animation>                                                     -->
+</animation>
 
 <animation>
   <type>rotate</type>
@@ -84,23 +86,37 @@
   </axis>
 </animation>
 
-<!--Controls not used now, later -->
+<!--Controls Cargo Door -->
 <animation>
   <type>pick</type>
   <object-name>hotspot_1</object-name>
   <visible>false</visible>
-  
+  <action>
+      <button>0</button>
+      <repeatable>false</repeatable>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/cargodoor/signal</property>
+      </binding>
+    </action>
 </animation>
 
 <animation>
   <type>pick</type>
   <object-name>hotspot_2</object-name>
   <visible>false</visible>
-  
+  <action>
+      <button>0</button>
+      <repeatable>false</repeatable>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/cargodoor/signal</property>
+      </binding>
+    </action>
 </animation>
 
 
-<!--Controls not used now, later -->
+<!--Controls not used -->
 <animation>
   <type>pick</type>
   <object-name>hotspot_3</object-name>
@@ -115,6 +131,7 @@
   
 </animation>
 
+<!--Controls ALS -->
 
 <animation>
   <type>pick</type>
